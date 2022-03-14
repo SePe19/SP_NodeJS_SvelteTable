@@ -1,14 +1,14 @@
 <script>
-	import SvelteTable from "/tables/svelte-table";
-	import faker from "https://cdnjs.cloudflare.com/ajax/libs/Faker/3.1.0/faker.min.js";
+	import SvelteTable from "svelte-table";
+	import faker from "@faker-js/faker";
 	faker.seed(5);
   
 	let sortBy = "id";
 	let sortOrder = 1;
 	let iconAsc = "↑";
 	let iconDesc = "↓";
-	let selectedCols = ["id", "first_name", "last_name", "email"];
-	let numRows = 10;
+	let selectedCols = ["id", "first_name", "last_name", "email", "image"];
+	let numRows = 100;
 	let data = [];
   
 	let generateData = () => {
@@ -23,7 +23,8 @@
 		  d.email =
 			d.first_name[0].toLowerCase() +
 			d.last_name.toLowerCase() +
-			"@zipit.org.ca";
+			"@gmail.com";
+			d.image = faker.image.avatar();
 		  return d;
 		});
 	};
@@ -86,7 +87,14 @@
 		title: "EMAIL",
 		value: v => v.email,
 		sortable: true,
-		class: "text-center"
+		class: "text-left"
+	  },
+	  image: {
+		key: "image",
+		title: "IMAGE",
+		value: d => d.image,
+		sortable: false,
+		class: "text-left"
 	  }
 	};
   
@@ -137,25 +145,3 @@
 		classNameSelect={['custom-select']} />
 	</div>
   </div>
-
-<style>
-	main {
-		text-align: center;
-		padding: 1em;
-		max-width: 240px;
-		margin: 0 auto;
-	}
-
-	h1 {
-		color: #ff3e00;
-		text-transform: uppercase;
-		font-size: 4em;
-		font-weight: 100;
-	}
-
-	@media (min-width: 640px) {
-		main {
-			max-width: none;
-		}
-	}
-</style>
